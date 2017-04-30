@@ -171,17 +171,17 @@
 {% endmacro %}
 
 {% macro form_css() %}
-  <link href="{{ theme_static('vendor/select2/select2.css', v='3.5.2') }}" rel="stylesheet">
-  <link href="{{ theme_static('vendor/bootstrap-daterangepicker/daterangepicker-bs2.css', v='1.3.22') }}" rel="stylesheet">
+  <link href="{{ theme_static('vendor/select2/select2.css', v='3.5.2', external=True) }}" rel="stylesheet">
+  <link href="{{ theme_static('vendor/bootstrap-daterangepicker/daterangepicker-bs2.css', v='1.3.22', external=True) }}" rel="stylesheet">
   {% if config.MAPBOX_MAP_ID %}
-  <link href="{{ theme_static('vendor/leaflet/leaflet.css', v='0.7.3') }}" rel="stylesheet">
-  <link href="{{ theme_static('vendor/leaflet/leaflet.draw.css', v='0.2.3') }}" rel="stylesheet">
+  <link href="{{ theme_static('vendor/leaflet/leaflet.css', v='0.7.3',external=True) }}" rel="stylesheet">
+  <link href="{{ theme_static('vendor/leaflet/leaflet.draw.css', v='0.2.3',external=True) }}" rel="stylesheet">
   {% if config.MAPBOX_SEARCH %}
-  <link href="{{ theme_static('vendor/leaflet/leaflet.search.css', v='1.5.7') }}" rel="stylesheet">
+  <link href="{{ theme_static('vendor/leaflet/leaflet.search.css', v='1.5.7',external=True) }}" rel="stylesheet">
   {% endif %}
   {% endif %}
   {% if editable_columns %}
-  <link href="{{ theme_static('vendor/x-editable/css/bootstrap2-editable.css', v='1.5.1') }}" rel="stylesheet">
+  <link href="{{ theme_static('vendor/x-editable/css/bootstrap2-editable.css', v='1.5.1',external=True) }}" rel="stylesheet">
   {% endif %}
 {% endmacro %}
 
@@ -193,18 +193,18 @@
   window.MAPBOX_ACCESS_TOKEN = "{{ config.MAPBOX_ACCESS_TOKEN }}";
   {% endif %}
   </script>
-  <script src="{{ theme_static('vendor/leaflet/leaflet.js', v='0.7.3') }}"></script>
-  <script src="{{ theme_static('vendor/leaflet/leaflet.draw.js', v='0.2.3') }}"></script>
+  <script src="{{ theme_static('vendor/leaflet/leaflet.js', v='0.7.3',external=True) }}"></script>
+  <script src="{{ theme_static('vendor/leaflet/leaflet.draw.js', v='0.2.3',external=True) }}"></script>
   {% if config.MAPBOX_SEARCH %}
   <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
-  <script src="{{ theme_static('vendor/leaflet/leaflet.search.js', v='1.5.7') }}"></script>
+  <script src="{{ theme_static('vendor/leaflet/leaflet.search.js', v='1.5.7',external=True) }}"></script>
   {% endif %}
   {% endif %}
-  <script src="{{ theme_static('vendor/bootstrap-daterangepicker/daterangepicker.js', v='1.3.22') }}"></script>
+  <script src="{{ theme_static('vendor/bootstrap-daterangepicker/daterangepicker.js', v='1.3.22',external=True) }}"></script>
   {% if editable_columns %}
-  <script src="{{ theme_static('vendor/x-editable/js/bootstrap2-editable.min.js', v='1.5.1') }}"></script>
+  <script src="{{ theme_static('vendor/x-editable/js/bootstrap2-editable.min.js', v='1.5.1',external=True) }}"></script>
   {% endif %}
-  <script src="{{ theme_static('admin/js/form.js', v='1.0.0') }}"></script>
+  <script src="{{ theme_static('admin/js/form.js', v='1.0.0',external=True) }}"></script>
 {% endmacro %}
 
 

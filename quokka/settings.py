@@ -38,6 +38,7 @@ CORE_EXTENSIONS = [
     'quokka.ext.context_processors.configure',
     'quokka.ext.template_filters.configure',
     'quokka.ext.security.configure',
+    'quokka.ext.session.configure',
     'quokka.ext.fixtures.configure',
     # 'quokka.ext.blueprints.load_from_packages',
     'quokka.ext.blueprints.load_from_folder',
@@ -47,6 +48,7 @@ CORE_EXTENSIONS = [
     'quokka.ext.before_request.configure',
     'quokka.ext.views.configure',
     'quokka.ext.oauthlib.configure',
+    'quokka.ext.captcha.configure',
 ]
 
 
@@ -69,6 +71,11 @@ SECRET_KEY = "S3cr3Tk3Y"  # noqa
 Take a look at Flask-Cache documentation
 """
 CACHE_TYPE = "simple"
+
+'''
+Take a look at Flask-Session document
+'''
+SESSION_TYPE = 'redis'
 
 
 """
@@ -163,7 +170,7 @@ ENABLE_TO_PDF = False
 Never change it here, use local_settings for this.
 """
 MODE = 'production'
-DEBUG = False
+DEBUG = True
 
 """
 Debug toolbar only works if installed
@@ -241,7 +248,7 @@ SECURITY_SEND_PASSWORD_CHANGE_EMAIL = False
 SECURITY_SEND_PASSWORD_RESET_NOTICE_EMAIL = False
 
 "Recaptcha for user register form"
-SECURITY_RECAPTCHA_ENABLED = False
+SECURITY_RECAPTCHA_ENABLED = True
 # RECAPTCHA_DATA_ATTRS = {'theme': 'dark'}
 # RECAPTCHA_PUBLIC_KEY = ''
 # RECAPTCHA_PRIVATE_KEY = ''
@@ -320,10 +327,10 @@ SENTRY_DSN = ""
 DEFAULT_TEXT_FORMAT = "markdown"
 
 "Shortner urls configuration"
-SHORTENER_ENABLED = False
+SHORTENER_ENABLED = True
 
 "Note: if you enable shortener you have to define a SERVER_NAME"
-# SERVER_NAME = 'localhost'
+SERVER_NAME = '127.0.0.1:5000'
 
 "Redirect aliases is enabled?"
 ALIASES_ENABLED = True
@@ -389,3 +396,8 @@ $   curl https://intake.opbeat.com/api/v1/
     -d status=completed
 """
 # OPBEAT = None
+
+MEDIA_IMAGE_THUMB_SIZE = (175,175)
+
+
+PREFERRED_URL_SCHEME = 'https'

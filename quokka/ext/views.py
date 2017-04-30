@@ -7,7 +7,8 @@ from quokka.core.views import (
     ContentDetail,
     ContentDetailPreview,
     ContentList,
-    TagList
+    TagList,
+    MonthArchive
 )
 from quokka.core.views import TagAtom, FeedAtom, TagRss, FeedRss, SiteMap
 from quokka.core.models.channel import Channel
@@ -90,3 +91,6 @@ def configure(app):
         view_func=ContentList.as_view('home'),
         defaults={"long_slug": Channel.get_homepage('long_slug') or "home"}
     )
+
+    # archives
+    app.add_quokka_url_rule('/archive/<month_of_year>/', view_func=MonthArchive.as_view('archive'))

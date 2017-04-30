@@ -13,7 +13,7 @@
                     <li style="margin-bottom: 5px">
                         {{ post.channel.title }} | {{ post.title }}
                         | <i class={% if post.published %} "icon-ok-circle" {% else %} "icon-ban-circle" {% endif %}></i>
-                        <a class="btn btn-success btn-small" href="{{ url_for('post.edit_view', id=post.id)}}">
+                        <a class="btn btn-success btn-small" href="{{ url_for('post.edit_view', id=post.id, _external=True)}}">
                         <i class="icon-edit"></i> {{_gettext('Edit')}}</a>
                           <a class="btn btn-primary btn-small" target="_blank" href="{{ post.get_absolute_url(endpoint='quokka.core.detail' if post.published else 'quokka.core.preview') }}">
                           <i class="icon-globe"></i> {{_gettext('View') if post.published else _gettext('Preview')}}</a>
@@ -32,7 +32,7 @@
 {#                        {{ comment.author_name }} {{ _gettext('says') }}:#}
 {#                        <br><small>{{ comment.body[:140] }}</small>#}
 {#                        <br> <i class={% if comment.published %} "icon-ok-circle" {% else %} "icon-ban-circle" {% endif %}></i>#}
-{#                        <a  href="{{ url_for('comment.edit_view', id=comment.id)}}">#}
+{#                        <a  href="{{ url_for('comment.edit_view', id=comment.id, _external=True)}}">#}
 {#                        <i class="icon-edit"></i> </a>#}
 {#                        <a target="_blank" href="{{ comment.get_canonical_url() }}">#}
 {#                        <i class="icon-globe"></i></a>#}
@@ -49,7 +49,7 @@
     <div class="row">
     {% for endpoint, icon, text in config.get('ADMIN_ICONS', [])%}
         <div class="span1">
-            <a href="{{ url_for(endpoint) }}" class="btn btn-primary">
+            <a href="{{ url_for(endpoint, _external=True) }}" class="btn btn-primary">
                 <i class="icon-{{icon}} icon-white"></i>
                 <span><strong>{{_gettext(text)}}</strong></span>
             </a>
@@ -60,7 +60,7 @@
 
     <div class="row">
     <div class="span1" style="margin-top: 30px;">
-    <form id="swatcher_form" action="{{url_for('quokka.modules.accounts.set_swatch')}}" method="POST">
+    <form id="swatcher_form" action="{{url_for('quokka.modules.accounts.set_swatch', _external=True)}}" method="POST">
         <input type="hidden" value="{{csrf_token()}}" name="csrf_token" id="csrf_token" />
         <label>{{_gettext('Theme')}}</label>
         <select id="swatch" name="swatch" onchange="$('#swatcher_form').submit();">

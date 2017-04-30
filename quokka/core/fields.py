@@ -2,6 +2,11 @@
 
 from mongoengine import fields
 from mongoengine.base.datastructures import BaseList
+from wtforms import ValidationError
+from wtforms.fields import Field
+from quokka.core import widgets
+from flask import request
+from flask_captcha.views import validate_captcha
 
 
 class MultipleObjectsReturned(Exception):
@@ -129,3 +134,28 @@ class ListField(fields.ListField):
         value = super(ListField, self).__get__(*args, **kwargs)
         inject(value)
         return value
+
+
+class Captcha(object):
+    """Validates a ReCaptcha."""
+
+    def __init__(self, message=None):
+        self.message = message
+
+    def __call__(self, form, field):
+        captcha_key = request.form.get("captcha_key", "")
+        captcha_value = request.form.get("captcha_value", "").strip().lower()
+        if not validate_captcha(captcha_key, captcha_value):
+            raise ValidationError("unvalid captcha")
+
+
+class CaptchaField(Field):
+    widget = widgets.CaptchaWidget()
+
+    # error message if recaptcha validation fails
+    captcha_error = None
+
+    def __init__(self, label='', validators=None, **kwargs):
+        validators = validators or [Captcha()]
+        super(CaptchaField, self).__init__(label, validators, **kwargs)
+

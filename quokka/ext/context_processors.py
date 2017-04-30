@@ -4,6 +4,7 @@ import datetime
 from quokka.core.models.channel import Channel
 from quokka.core.models.config import Config
 from quokka.core.models.content import Content, Link
+from quokka.modules.comments.models import Comment
 
 
 def configure(app):
@@ -19,5 +20,6 @@ def configure(app):
             Content=Content,
             Channel=Channel,
             homepage=Channel.get_homepage(),
-            Link=Link
+            Link=Link,
+            Comment = Comment
         )

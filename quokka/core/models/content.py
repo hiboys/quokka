@@ -86,7 +86,7 @@ class Content(HasCustomValue, Publishable, LongSlugged,
                     path = self.contents.get(identifier=item).content.path
                 else:
                     path = self.contents.get(identifier=item).content.thumb
-                return url_for('quokka.core.media', filename=path)
+                return url_for('quokka.core.media', filename=path, _external=True)
             except Exception as e:
                 logger.warning('get_main_image_url:' + str(e))
 
@@ -124,9 +124,9 @@ class Content(HasCustomValue, Publishable, LongSlugged,
             long_slug = self.long_slug
 
         try:
-            return url_for(self.URL_NAMESPACE, long_slug=long_slug)
+            return url_for(self.URL_NAMESPACE, long_slug=long_slug, _external=True)
         except:
-            return url_for(endpoint, long_slug=long_slug)
+            return url_for(endpoint, long_slug=long_slug, _external=True)
 
     def get_canonical_url(self, *args, **kwargs):
         return self.get_absolute_url()

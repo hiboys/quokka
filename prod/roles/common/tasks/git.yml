@@ -1,0 +1,20 @@
+###
+# Clones or pulls the repo from a public or private Git repository
+##
+- name: ensure Git is installed via the system package
+  apt: name=git-core state=present update_cache=yes
+  sudo: yes
+
+- name: create deploy key directory if it does not exist
+  file: path=/home/{{ deploy_user }}/git/{{ app_name }}.git state=directory
+
+- name: Creating {{ repo_name }} git repository
+  command: git init --bare --shared /home/{{ deploy_user }}/git/{{ app_name }}.git
+
+- name: write git post receive hook
+  template: src=git_post_receive.j2
+            dest=/home/{{ deploy_user }}/git/{{ app_name }}.git/hooks/post-receive
+
+- name: chmod +x  post-receive
+  command: chmod +x /home/{{ deploy_user }}/git/{{ app_name }}.git/hooks/post-receive
+

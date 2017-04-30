@@ -1,8 +1,7 @@
 
-from flask import current_app
+from flask import current_app, Markup
 from wtforms.widgets import TextArea, TextInput
 from quokka.core.templates import render_template
-
 
 class TextEditor(TextArea):
     def __init__(self, *args, **kwargs):
@@ -48,3 +47,20 @@ class PrepopulatedText(TextInput):
                 slave=slave
             )
         return html
+
+
+CAPTCHA_HTML = u'''
+<script src="/_themes/pure/js/captcha.js" async="" defer=""></script>
+<input id="captcha_value" name="captcha_value" required="required" type="text" value="" size="30">
+<img id="captcha_img" src="" alt="captcha">
+<input id="captcha_key" name="captcha_key" type="hidden" value="">
+'''
+
+class CaptchaWidget(object):
+    def captcha_html(self):
+        return  Markup(CAPTCHA_HTML)
+
+    def __call__(self, field, error=None, **kwargs):
+        """Returns the recaptcha input HTML."""
+        return self.captcha_html()
+

@@ -11,10 +11,10 @@ from quokka.utils.translation import _l
 class CommentAdmin(ModelAdmin):
     roles_accepted = ('admin', 'editor', 'moderator')
     column_list = ('path', 'author_name', 'author_email',
-                   'created_at', 'published')
+                   'created_at', 'published', 'is_reply', 'content')
     form_columns = ['path', 'author_email', 'author_name',
                     'content_format', 'body', 'replies',
-                    'created_at', 'created_by', 'published']
+                    'created_at', 'created_by', 'published','is_reply', 'content']
     form_args = {
         'body': {'widget': TextEditor()}
     }

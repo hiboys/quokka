@@ -4,6 +4,7 @@
 import logging
 from flask_mistune import markdown
 
+from flask import url_for
 from quokka.core.db import db
 from quokka.core.models.custom_values import HasCustomValue
 from quokka.core.models.signature import (
@@ -143,9 +144,10 @@ class Channel(Tagged, HasCustomValue, Publishable, LongSlugged,
         return self.long_slug
 
     def get_absolute_url(self, *args, **kwargs):
+        home_url = url_for("quokka.core.home", _external=True)
         if self.is_homepage:
-            return "/"
-        return "/{0}/".format(self.long_slug)
+            return home_url
+        return  "{}{}/".format(home_url,self.long_slug)
 
     def get_canonical_url(self, *args, **kwargs):
         """

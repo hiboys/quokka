@@ -1,3 +1,4 @@
+
 /* custom google search */
 .cse .gsc-control-cse, .gsc-control-cse {
   padding: 0px !important;
@@ -189,9 +190,9 @@ a.back-home {
 }
 
 nav.pure-menu {
-    padding: 0 3em 0;
+    /*padding: 0 3em 0;*/
     background-color: #333;
-    padding: 7px 0 0 40px;
+    padding: 7px 0 0 7px;
 }
 
 .multiple-author-sidebar {
@@ -292,3 +293,68 @@ nav.pure-menu .pure-menu-list .pure-menu-link {
   background-color: red;
   font-weight: bold;
 }
+
+/*网站背景图片*/
+body{
+    background-image:url('/_themes/pure/img/bg.png');
+    display: block;
+}
+
+/*侧边栏的分割线*/
+.sidebar .widget{
+    background:url('/_themes/pure/img/widgetsep.png') bottom no-repeat;
+	padding:10px 15px 16px;
+}
+
+/*侧边栏的无序列表样式*/
+#recentComment li, #archieves li {
+	background:url('/_themes/pure/img/icons.gif') 0 -560px no-repeat;
+	padding-left:22px;
+	list-style:none;
+	margin-top:5px;
+}
+
+.sidebar ul{
+    padding: 0;
+}
+
+.sidebar {
+	font-size:95%;
+	line-height:145%;
+	overflow:hidden;
+	padding-top:8px;
+}
+
+.sidebar li {
+	font-size:12px;
+}
+
+/*评论区的样式*/
+.comments li{
+	list-style:none;
+}
+
+.comments ul{
+    list-style-type:none;
+}
+
+.comment-content{
+    margin-bottom: 24px;
+}
+
+/*评论框的样式*/
+.comment-text{
+    width:90%;
+}
+
+#cancel-comment-reply-link {
+    border-radius: 100%;
+    color: #f00;
+    font-weight: 400;
+    height: 0.95238095em;
+    letter-spacing: 0;
+    line-height: 1.1;
+    overflow: hidden;
+    width: 0.95238095em;
+}
+

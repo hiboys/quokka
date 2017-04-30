@@ -1,0 +1,7 @@
+###
+# Installs and configures mongodb
+##
+- name: ensure mongodb package is installed
+  apt: name=mongodb-server state=present update_cache=yes
+  sudo: yes
+

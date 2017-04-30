@@ -7,48 +7,49 @@
 <div class="pure-g-r" id="layout">
     {% include theme('sidebar.html') %}
     <!-- <div class="pure-u-1"> -->
-        {{ menu.build_nodes(nodes=channels) }}
-        <div class="content">
-            <!-- A wrapper for all the blog posts -->
-            <div class="posts">
-                <h1 class="content-subhead">All authors</h1>
+    {{ menu.build_nodes(nodes=channels) }}
+    <div class="content">
+        <!-- A wrapper for all the blog posts -->
+        <div class="posts">
+            <h1 class="content-subhead">All authors</h1>
 
-                <div class="pure-g">
+            <div class="pure-g">
 
                 {% for author in authors.items %}
-                    <section class="post  pure-u-1-2 author-block">
+                <section class="post  pure-u-1-2 author-block">
                     {% if author.email %}
                     <figure>
-                        <a href="{{url_for('quokka.modules.authors.author', author_id=author.username)}}"><img class="author_avatar" alt="{{ author.display_name }}" src="{{ author.get_avatar_url(size=200) }}" width="200">
+                        <a href="{{url_for('quokka.modules.authors.author', author_id=author.username)}}"><img
+                                class="author_avatar" alt="{{ author.display_name }}"
+                                src="{{ author.get_avatar_url(size=200) }}" width="200">
                         </a>
-                        <figcaption><a class="post-title" href="{{url_for('quokka.modules.authors.author', author_id=author.username)}}">{{ author.display_name }}</a>
+                        <figcaption><a class="post-title"
+                                       href="{{url_for('quokka.modules.authors.author', author_id=author.username)}}">{{
+                            author.display_name }}</a>
                         </figcaption>
                     </figure>
-                     {{author.get_value('position') or ''}}
-                     <p class="post-meta">
+                    {{author.get_value('position') or ''}}
+                    <p class="post-meta">
                         {{author.tagline|striptags|safe()}}
-                     </p>
+                    </p>
                     {% endif %}
                     <ul class="author-social author-social-grid">
-                      {% for link in author.links %}
+                        {% for link in author.links %}
                         <li>
-                          <a target="_blank" href="{{link.link}}">
-                            <i class="fa fa-lg fa-fw fa-{{link.css_class or 'globe'}}"></i>
-                            <strong>{{link.title}}</strong>
-                          </a>
+                            <a target="_blank" href="{{link.link}}">
+                                <i class="fa fa-lg fa-fw fa-{{link.css_class or 'globe'}}"></i>
+                                <strong>{{link.title}}</strong>
+                            </a>
                         </li>
-                      {% endfor %}
+                        {% endfor %}
                     </ul>
-                    </section>
+                </section>
                 {% endfor %}
-</div>
-
-
-
-                {{render_pagination(authors, request.path)}}
-                {% include theme('footer.html') %}
             </div>
+            {{render_pagination(authors, request.path)}}
         </div>
+    </div>
+    {% include theme('footer.html') %}
     <!-- </div> -->
 </div>
 {% endblock %}

@@ -145,6 +145,19 @@ class ModelAdmin(ThemeMixin, Roled, ModelView):
     def get_datetime_format(self):
         return current_app.config.get('DATETIME_FORMAT', self.datetime_format)
 
+    def get_url(self, endpoint, **kwargs):
+        """
+            Generate URL for the endpoint. If you want to customize URL generation
+            logic (persist some query string argument, for example), this is
+            right place to do it.
+
+            :param endpoint:
+                Flask endpoint name
+            :param kwargs:
+                Arguments for `url_for`
+        """
+        return url_for(endpoint, _external=True, **kwargs)
+
     def get_instance(self, i):
         try:
             return self.model.objects.get(id=i)
@@ -227,11 +240,33 @@ class ContentActions(object):
 
 
 class BaseIndexView(Roled, ThemeMixin, AdminIndexView):
-    pass
+    def get_url(self, endpoint, **kwargs):
+        """
+            Generate URL for the endpoint. If you want to customize URL generation
+            logic (persist some query string argument, for example), this is
+            right place to do it.
+
+            :param endpoint:
+                Flask endpoint name
+            :param kwargs:
+                Arguments for `url_for`
+        """
+        return url_for(endpoint, _external=True, **kwargs)
 
 
 class BaseView(Roled, ThemeMixin, AdminBaseView):
-    pass
+    def get_url(self, endpoint, **kwargs):
+        """
+            Generate URL for the endpoint. If you want to customize URL generation
+            logic (persist some query string argument, for example), this is
+            right place to do it.
+
+            :param endpoint:
+                Flask endpoint name
+            :param kwargs:
+                Arguments for `url_for`
+        """
+        return url_for(endpoint, _external=True, **kwargs)
 
 
 class BaseContentAdmin(ContentActions, PublishActions, ModelAdmin):

@@ -23,17 +23,17 @@
       <link rel="alternate" type="application/atom+xml" title="{{ channel.title|title }} Posts (Atom 0.3)" href="{{url_for('quokka.core.atom_list', long_slug=channel.long_slug)}}">
       <link rel="alternate" type="application/rss+xml" title="{{ channel.title|title }} Posts (RSS 2.0)" href="{{ url_for('quokka.core.rss_list', long_slug=channel.long_slug) }}">
     {% endif %}
-    <link rel="icon" type="image/x-icon" href="{{theme_static('favicon.ico')}}" />
-    <link rel="shortcut icon" href="{{theme_static('favicon.ico')}}">
+    <link rel="icon" type="image/x-icon" href="{{theme_static('favicon.ico', external=True)}}" />
+    <link rel="shortcut icon" href="{{theme_static('favicon.ico', external=True)}}">
 
     <title>{%block title%}{{Config.get('site', 'site_name', 'The Happiest CMS in the World')}}{% endblock %}</title>
     {% block head %}
     {% endblock head %}
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{theme_static('css/pure.css')}}">
-    <link rel="stylesheet" href="{{theme_static('css/custom.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{theme_static('css/pure.css',external=True)}}">
+    <link rel="stylesheet" href="{{theme_static('css/custom.css',external=True)}}">
     {% block head_css %}{% endblock %}
     {% block head_js %}{% endblock %}
     {% include theme('analytics.html') %}
@@ -50,7 +50,7 @@
     {% block content %}
     {% endblock %}
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     {% block bottom_js %}{% endblock %}
     {% block js_footer %}{% endblock %}
     <script>

@@ -1,0 +1,9 @@
+[program:{{ app_name }}]
+environment={% for k, v in wsgi_env_vars.iteritems() %}{% if not loop.first %},{% endif %}{{ k }}="{{ v }}"{% endfor %}
+
+command={{ venv_dir }}/bin/gunicorn wsgi:app -w 3 -b 'unix:/tmp/gunicorn.sock' --access-logfile /tmp/gunicorn_access.log --error-logfile /tmp/gunicorn_error.log
+directory={{ app_dir }}
+user={{ deploy_user }}
+autostart=true
+autorestart=true
+redirect_stderr=True

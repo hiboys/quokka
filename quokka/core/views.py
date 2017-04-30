@@ -5,6 +5,7 @@ import logging
 import hashlib
 import collections
 import PyRSS2Gen as pyrss
+import calendar
 
 from datetime import datetime, timedelta
 from flask import request, redirect, url_for, abort, current_app
@@ -69,7 +70,7 @@ class ContentList(MethodView):
         if not is_accessible(roles_accepted=channel.roles):
             raise abort(403, "User has no role to view this channel content")
 
-        if channel.is_homepage and request.path != channel.get_absolute_url():
+        if channel.is_homepage and request.path != "/": #channel.get_absolute_url():
             return redirect(channel.get_absolute_url())
 
         published_channels = Channel.objects(published=True).values_list('id')
@@ -240,6 +241,33 @@ class ContentDetail(MethodView):
             # Need to deal with related channels
             raise abort(403, "User has no role to view this channel content")
 
+
+    def get_previous_content_url(self, content):
+        filters = {
+            'published': True,
+            'model__not__startswith': 'media',
+            'created_at__lt': content.created_at
+        }
+
+        previous_content = Content.objects.filter(**filters).only("slug", "long_slug", "created_at", "channel").\
+            order_by("-created_at").first()
+        if previous_content is not None:
+            return  previous_content.get_absolute_url()
+
+
+    def get_next_content_url(self, content):
+        filters = {
+            'published': True,
+            'model__not__startswith': 'media',
+            'created_at__gt': content.created_at
+        }
+
+        next_content = Content.objects.filter(**filters).only("slug", "long_slug", "created_at", "channel").\
+            order_by("created_at").first()
+        if next_content is not None:
+            return  next_content.get_absolute_url()
+
+
     def get_context(self, long_slug, render_content=False):
         homepage = Channel.objects.get(is_homepage=True)
 
@@ -269,7 +297,9 @@ class ContentDetail(MethodView):
 
         context = {
             "content": content,
-            "channel": content.channel
+            "channel": content.channel,
+            "previous_content_url": self.get_previous_content_url(content),
+            "next_content_url": self.get_next_content_url(content)
         }
 
         return context
@@ -588,3 +618,24 @@ class SiteMap(MethodView):
             contents=self.get_contents(),
             channels=self.get_channels()
         )
+
+class MonthArchive(MethodView):
+    def get(self, month_of_year):
+        try:
+            firstday_of_month = datetime.strptime(month_of_year, '%Y%m')
+        except:
+            abort(404)
+
+        firstday_of_nextmonth = firstday_of_month + \
+                                timedelta(days=calendar.monthrange(firstday_of_month.year,
+                                                                   firstday_of_month.month)[1])
+        filters = {
+            'published': True,
+            'created_at__gte': firstday_of_month,
+            'created_at__lt': firstday_of_nextmonth,
+            "model__not__startswith": "media"
+        }
+
+        articles = Content.objects().filter(**filters)
+        return render_template('archives.html',
+                               dates=articles)

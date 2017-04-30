@@ -16,7 +16,7 @@
 {% block content %}
 <div class="pure-g-r" id="layout">
     {% include theme('sidebar.html') %}
-    <div class="pure-u-1">
+    <div class="pure-u-3-4">
         {{ menu.build_nodes(nodes=channels) }}
         <div class="content">
             <!-- A wrapper for all the blog posts -->
@@ -24,9 +24,9 @@
             <div class="posts">
                 {{render_list(contents.items)}}
                 {{render_pagination(contents, channel.get_absolute_url())}}
-                {% include theme('footer.html') %}
             </div>
         </div>
     </div>
+    {% include theme('footer.html') %}
 </div>
 {% endblock %}

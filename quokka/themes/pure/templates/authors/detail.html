@@ -8,46 +8,32 @@
 {% endblock %}
 
 {% block meta %}
-    {{ super() }}
-    <meta property="fb:app_id" content="{{ Config.get('site', 'facebook_app_id', '') }}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="{{ author.display_name }}" />
-    <meta property="og:site_name" content="{{ Config.get('site', 'site_name') }}" />
-    <meta property="og:url" content="{{url_for('quokka.modules.authors.author', author_id=author.id)}}" />
-    <meta property="og:description" content="{{ author.summary|striptags }}" />
-    <meta property="og:image" content="{{ author.get_avatar_url(size=64) }}" />
+{{ super() }}
+<meta property="fb:app_id" content="{{ Config.get('site', 'facebook_app_id', '') }}"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="{{ author.display_name }}"/>
+<meta property="og:site_name" content="{{ Config.get('site', 'site_name') }}"/>
+<meta property="og:url" content="{{url_for('quokka.modules.authors.author', author_id=author.id)}}"/>
+<meta property="og:description" content="{{ author.summary|striptags }}"/>
+<meta property="og:image" content="{{ author.get_avatar_url(size=64) }}"/>
 {% endblock meta %}
 
 {% block content %}
-    <div class="pure-g-r" id="layout">
-        <div class="sidebar sidebar-article pure-u">
-        <header class="header-article">
-            <hgroup>
-              <a href="/" class="back-home"><img src="{{ Config.get('site', 'site_logo_internal', theme_static('img/logo_black.png')) }}" alt="{{Config.get('site', 'site_name')}}"></a>
-                {{render_author_sidebar(author)}}
-                <p class="about-author">{{ author.bio }}</p>
-                <a href="{{url_for('quokka.modules.authors.authors')}}" class="back-home">&larr;Authors</a>
-            </hgroup>
-        </header>
-        </div>
-
-        <div class="pure-u-1">
-            {{ menu.build_nodes(nodes=channels) }}
-            <div class="content">
-                <!-- A wrapper for all the blog posts -->
-                <h1 class="content-subhead">Contents written by "{{author.display_name}}"</h1>
-                <div class="posts">
-                    {% for content in contents.items %}
-                      {{render_list_item(content)}}
-                    {% endfor %}
-
-                    {{render_pagination(contents, request.path)}}
-
-
-                    {% include theme('footer.html') %}
-                </div>
+<div class="pure-g-r" id="layout">
+    {{ menu.build_nodes(nodes=channels) }}
+    <div class="pure-u-3-4">
+        <div class="content">
+            <!-- A wrapper for all the blog posts -->
+            <h1 class="content-subhead">Contents written by "{{author.display_name}}"</h1>
+            <div class="posts">
+                {% for content in contents.items %}
+                {{render_list_item(content)}}
+                {% endfor %}
+                {{render_pagination(contents, request.path)}}
             </div>
         </div>
-
     </div>
+    {% include theme('sidebar.html') %}
+    {% include theme('footer.html') %}
+</div>
 {% endblock %}

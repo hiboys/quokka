@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block bottom_js %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fitvids/1.0.1/jquery.fitvids.min.js"></script>
-    <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fitvids/1.0.1/jquery.fitvids.min.js"></script>
+<script>
         $(document).ready(function(){
             $(".content").fitVids();
         });
@@ -19,61 +19,61 @@
           $("#twitter-widget-0").css("margin-bottom", "-5px");
           $("#twitter-widget-0").css("margin-left", "-1px");
         });
-    </script>
-    <script type="text/javascript" src="https://apis.google.com/js/platform.js">
-      {lang: 'pt-BR'}
-    </script>
+
+</script>
 {% endblock %}
 
 
 {% block meta %}
-    {{ super() }}
-    <meta property="fb:app_id" content="{{ Config.get('site', 'facebook_app_id', '') }}" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="{{ content.title }}" />
-    <meta property="og:site_name" content="{{ Config.get('site', 'site_name') }}" />
-    <meta property="og:url" content="{{ content.get_http_url() }}" />
-    <meta property="og:description" content="{{ content.get_summary()|truncate(255)|striptags }}" />
-    <meta property="og:image" content="{{ content.get_main_image_http(default=Config.get('site', 'site_logo', theme_static('img/logo.png'))) }}" />
+{{ super() }}
+<meta property="fb:app_id" content="{{ Config.get('site', 'facebook_app_id', '') }}"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="{{ content.title }}"/>
+<meta property="og:site_name" content="{{ Config.get('site', 'site_name') }}"/>
+<meta property="og:url" content="{{ content.get_http_url() }}"/>
+<meta property="og:description" content="{{ content.get_summary()|truncate(255)|striptags }}"/>
+<meta property="og:image"
+      content="{{ content.get_main_image_http(default=Config.get('site', 'site_logo', theme_static('img/logo.png'))) }}"/>
 {% endblock meta %}
 
 {% block content %}
-    <div class="pure-g-r" id="layout">
-      {{ menu.build_nodes(nodes=channels) }}
-      {{load_page_content(content)}}
-    </div>
+<div class="pure-g-r" id="layout">
+    {{ menu.build_nodes(nodes=channels) }}
+    {{load_page_content(content)}}
+    {% include theme('sidebar.html') %}
+    {% include theme('footer.html') %}
+</div>
 {% endblock %}
 
 
 {% block js_footer %}
 {% if Config.get('comments', 'system') == 'internal' %}
 <script>
-$(function(){
-
-    function bind_comment_form_submit(){
-        $("form").on("submit", function(e){
-            var postData = $(this).serializeArray();
-            var formURL = $(this).attr("action");
-            $.ajax(
+ function bind_comment_form_submit(){
+    $("form").on("submit", function(e){
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax(
+        {
+            url : formURL,
+            type: "POST",
+            data : postData,
+            success:function(data, textStatus, jqXHR)
             {
-                url : formURL,
-                type: "POST",
-                data : postData,
-                success:function(data, textStatus, jqXHR)
-                {
-                    //data: return data from server
-                    $("#comment-area").html(data);
-                    bind_comment_form_submit();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    //if fails
-                }
-            });
-            e.preventDefault(); //STOP default action
-        })
-    }
+                //data: return data from server
+                $("#comment-area").html(data);
+                bind_comment_form_submit();
+            },
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                //if fails
+            }
+        });
+        e.preventDefault(); //STOP default action
+    });
+}
 
+$(function(){
     function load_internal_comments(){
         var comment_area = $("#comment-area" );
         comment_area.empty();
@@ -81,11 +81,34 @@ $(function(){
             console.log( "Load was performed." );
             bind_comment_form_submit();
         });
-    }
+    };
 
     load_internal_comments();
+});
 
-})
+function reply_comment(id){
+    var formURL = $("form").attr("action");
+    $.ajax(
+    {
+        url : formURL,
+        type: "GET",
+        data : {replytocom:id},
+        success:function(data, textStatus, jqXHR)
+        {
+            //data: return data from server
+            $("#comment-area").html(data);
+            bind_comment_form_submit();
+            window.location.href=window.location.href.replace("#comment-form","")+"#comment-form";
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+            //if fails
+        }
+    });
+    return true;
+};
+
+
 </script>
 {% endif %}
 {% endblock %}

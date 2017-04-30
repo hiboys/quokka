@@ -1,4 +1,4 @@
-{% from theme('_helpers.html') import render_grid, render_pagination with context %}
+{% from theme('_helpers.html') import render_grid, render_pagination, render_list with context %}
 {% extends theme("base.html") %}
 
 {%block title%} {{channel.long_slug.split('/')|join(' | ')}} | {{Config.get('site', 'site_name', 'Quokka site')}} {% endblock %}
@@ -15,18 +15,18 @@
 
 {% block content %}
 <div class="pure-g-r" id="layout">
-    {% include theme('sidebar.html') %}
-    <div class="pure-u-1">
-        {{ menu.build_nodes(nodes=channels) }}
+    {{ menu.build_nodes(nodes=channels) }}
+    <div class="pure-u-3-4">
         <div class="content">
             <!-- A wrapper for all the blog posts -->
             
             <div class="posts">
-                {{render_grid(contents.items)}}
+                {{render_list(contents.items)}}
                 {{render_pagination(contents, channel.get_absolute_url())}}
-                {% include theme('footer.html') %}
             </div>
         </div>
     </div>
+    {% include theme('sidebar.html') %}
+    {% include theme('footer.html') %}
 </div>
 {% endblock %}

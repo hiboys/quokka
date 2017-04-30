@@ -1,8 +1,10 @@
-<footer class="footer">
-    <p>
-        <span>Powered by <a href="http://www.quokkaproject.org">Quokka CMS</a></span>
-        &copy; {{Config.get('site', 'site_name')}} &ndash;
-        Based in <a href="https://github.com/PurePelicanTheme/pure">Pure Theme</a> &ndash; 
-        Access the <a href="/admin">Admin</a> interface
-    </p>
-</footer>
+<div class="pure-u-1">
+    <footer class="footer">
+        <p>
+            <span>Powered by <a href="http://www.quokkaproject.org">Quokka CMS</a></span>
+            &copy; {{Config.get('site', 'site_name')}} &ndash;
+            Based in <a href="https://github.com/PurePelicanTheme/pure">Pure Theme</a> &ndash;
+            Access the <a href="{{url_for('admin.index', _external=True)}}">Admin</a> interface
+        </p>
+    </footer>
+</div>

@@ -18,9 +18,9 @@
         {% if admin_view.can_create %}
         <li>
           {%- if admin_view.create_modal -%}
-            {{ lib.add_modal_button(url=url_for('.create_view', url=return_url, modal=True), title=_gettext('Create new record'), content=_gettext('Create')) }}
+            {{ lib.add_modal_button(url=url_for('.create_view', url=return_url, modal=True, _external=True), title=_gettext('Create new record'), content=_gettext('Create')) }}
           {% else %}
-            <a href="{{ url_for('.create_view', url=return_url) }}" title="{{ _gettext('Create new record') }}">{{ _gettext('Create') }}</a>
+            <a href="{{ url_for('.create_view', url=return_url, _external=True) }}" title="{{ _gettext('Create new record') }}">{{ _gettext('Create') }}</a>
           {%- endif -%}
         </li>
         {% endif %}

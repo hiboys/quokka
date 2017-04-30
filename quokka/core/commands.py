@@ -27,7 +27,11 @@ if app.config.get("LOGGER_ENABLED"):
 @click.option('--port', default=5000)
 def runserver(reloader, debug, host, port):
     """Run the Flask development server i.e. app.run()"""
-    app.run(use_reloader=reloader, debug=debug, host=host, port=port)
+    import  os
+    current_dir = app.config["ROOT_DIR"]
+    key_dir = os.path.join(current_dir, "prod/ssl_cert/quokka.key")
+    crt_dir = os.path.join(current_dir, "prod/ssl_cert/quokka.crt")
+    app.run(use_reloader=reloader, debug=debug, host=host, port=port, ssl_context=(crt_dir, key_dir))
 
 
 @click.command()
@@ -84,3 +88,12 @@ def shell(console):
     """Runs a Python shell with Quokka context"""
     context = {'app': app, 'db': db}
     return create_shell(console, extra_vars=context)
+
+@click.command()
+def create_captcha_db():
+    from flask_sqlalchemy import SQLAlchemy
+    from quokka.ext.captcha import app_captcha
+    db = SQLAlchemy(app)
+    app_captcha.init_app(app)
+    click.echo("create captcha sqlite db")
+    db.create_all()
